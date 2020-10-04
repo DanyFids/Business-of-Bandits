@@ -21,10 +21,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 730.8
-  m_MinSize: {x: 678, y: 471}
-  m_MaxSize: {x: 14000, y: 14021}
+  m_MinSize: {x: 679, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 7227
+  controlID: 12264
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -136,10 +136,10 @@ MonoBehaviour:
     y: 0
     width: 1124
     height: 730.8
-  m_MinSize: {x: 403, y: 471}
-  m_MaxSize: {x: 10000, y: 14021}
+  m_MinSize: {x: 403, y: 492}
+  m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 7228
+  controlID: 12219
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 7229
+  controlID: 12184
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -222,7 +222,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: eebcfffff2bcffff1ef5ffff6ef5ffff40fbffff223700005a3700005e370000
+      m_ExpandedIDs: 40fbffffe8360000ec360000f63600002c37000058370000623700007437000078370000f6370000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -311,9 +311,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -8.6217785, y: 7.9481597, z: -3.8004775}
+    m_Target: {x: -3.7982683, y: 3.8338072, z: -3.2531707}
     speed: 2
-    m_Value: {x: -8.6217785, y: 7.9481597, z: -3.8004775}
+    m_Value: {x: -3.7982683, y: 3.8338072, z: -3.2531707}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -360,13 +360,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.009650649, y: -0.9903462, z: 0.09836563, w: 0.09716228}
+    m_Target: {x: 0.013183079, y: -0.049172197, z: 0.0006512861, w: 0.99869657}
     speed: 2
-    m_Value: {x: 0.009650673, y: -0.9903487, z: 0.09836587, w: 0.09716252}
+    m_Value: {x: 0.013183164, y: -0.049172517, z: 0.00065129035, w: 0.99870306}
   m_Size:
-    m_Target: 7.074633
+    m_Target: 6.7562747
     speed: 2
-    m_Value: 7.074633
+    m_Value: 6.7562747
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -483,12 +483,12 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials/trasform_mats
+    - Assets/Scripts/Editor_Scripts
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials/trasform_mats
+  - Assets/Scripts/Editor_Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Arkan\Documents\Unity Projects\Business-of-Bandits\Business
     of Bandits
@@ -496,9 +496,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 38380000
-    m_LastClickedID: 14392
-    m_ExpandedIDs: 000000002a3800002e38000000ca9a3b
+    m_SelectedIDs: ce380000
+    m_LastClickedID: 14542
+    m_ExpandedIDs: 00000000603800007038000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -526,7 +526,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002a38000000ca9a3b
+    m_ExpandedIDs: 000000006038000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -551,9 +551,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 38380000
-    m_LastClickedInstanceID: 14392
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 58370000
+    m_LastClickedInstanceID: 14168
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300005e640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -627,8 +627,8 @@ MonoBehaviour:
     y: 0
     width: 412
     height: 730.8
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -666,7 +666,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 14392
+  m_LastInspectedObjectInstanceID: 14168
   m_LastVerticalScrollValue: 0
   m_AssetGUID: 
   m_InstanceID: 0

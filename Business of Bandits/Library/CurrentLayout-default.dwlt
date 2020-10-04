@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: Scene
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 521}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 780.8
-  m_MinSize: {x: 875, y: 521}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -119,10 +119,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 730.8
-  m_MinSize: {x: 678, y: 471}
-  m_MaxSize: {x: 14000, y: 14021}
+  m_MinSize: {x: 679, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 7497
+  controlID: 12435
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,10 +144,10 @@ MonoBehaviour:
     y: 0
     width: 1124
     height: 730.8
-  m_MinSize: {x: 403, y: 471}
-  m_MaxSize: {x: 10000, y: 14021}
+  m_MinSize: {x: 403, y: 492}
+  m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 7498
+  controlID: 12485
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 7499
+  controlID: 12486
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -399,9 +399,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: baacffff
-      m_LastClickedID: -21318
-      m_ExpandedIDs: eebcfffff2bcffff1ef5ffff6ef5ffff40fbffff223700005a3700005e370000
+      m_SelectedIDs: 0e370000
+      m_LastClickedID: 14094
+      m_ExpandedIDs: 40fbffffec360000f63600002c37000058370000623700007437000078370000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -462,9 +462,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.7472215, y: 8.957554, z: -12.57711}
+    m_Target: {x: -14.347677, y: 1.1124989, z: 5.6285872}
     speed: 2
-    m_Value: {x: -2.7472215, y: 8.957554, z: -12.57711}
+    m_Value: {x: -14.347677, y: 1.1124989, z: 5.6285872}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -511,13 +511,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.0055465614, y: -0.83909476, z: 0.008559319, w: 0.54388946}
+    m_Target: {x: 0.080056526, y: -0.2870439, z: 0.024084406, w: 0.954247}
     speed: 2
-    m_Value: {x: 0.0055337166, y: -0.83990973, z: 0.00856763, w: 0.54263026}
+    m_Value: {x: 0.08009374, y: -0.2856164, z: 0.023964647, w: 0.9546905}
   m_Size:
-    m_Target: 7.074633
+    m_Target: 12.063944
     speed: 2
-    m_Value: 7.074633
+    m_Value: 12.063944
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -607,12 +607,12 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials/trasform_mats
+    - Assets/Scripts/Editor_Scripts
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials/trasform_mats
+  - Assets/Scripts/Editor_Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Arkan\Documents\Unity Projects\Business-of-Bandits\Business
     of Bandits
@@ -620,9 +620,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 38380000
-    m_LastClickedID: 14392
-    m_ExpandedIDs: 000000002a3800002e38000000ca9a3b
+    m_SelectedIDs: ce380000
+    m_LastClickedID: 14542
+    m_ExpandedIDs: 00000000603800007038000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -650,7 +650,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002a38000000ca9a3b
+    m_ExpandedIDs: 000000006038000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
