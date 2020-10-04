@@ -8,6 +8,10 @@ public class CameraBehavior : MonoBehaviour
 	public float CAM_BOOST_MULT;
 	public float CAM_ROT_SPEED;
 
+	private float x_rot = 0.0f;
+	private float y_rot = 0.0f;
+	private bool cursor_locked = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -16,6 +20,12 @@ public class CameraBehavior : MonoBehaviour
 
 		if (Input.GetMouseButton(1))
 		{
+			if (!cursor_locked)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				cursor_locked = true;
+			}
+
 			float frame_mov_speed = CAM_MOV_SPEED * dt;
 
 			if (Input.GetKey(KeyCode.LeftShift))
@@ -26,39 +36,52 @@ public class CameraBehavior : MonoBehaviour
 			float mouse_x = Input.GetAxis("Mouse X");
 			float mouse_y = Input.GetAxis("Mouse Y");
 
-			transform.Rotate(new Vector3(-mouse_y, mouse_x, 0.0f));
+			y_rot += mouse_x;
+			x_rot -= mouse_y;
 
-			if (Input.GetKey(KeyCode.Q)){
-				transform.Rotate(new Vector3(0.0f, 0.0f, CAM_ROT_SPEED * dt));
-			}
-			if (Input.GetKey(KeyCode.E))
-			{
-				transform.Rotate(new Vector3(0.0f, 0.0f, -CAM_ROT_SPEED * dt));
-			}
+			x_rot = Mathf.Clamp(x_rot, -90.0f, 90.0f);
+
+			if (y_rot < -360.0f)
+				y_rot += 360.0f;
+			else if (y_rot > 360.0f)
+				y_rot -= 360.0f;
+
+			transform.localRotation = Quaternion.Euler(x_rot, y_rot, 0.0f);
+
+			//Vector3 mov_direction = (Vector3.right * mov_horizontal + Vector3.forward * mov_vertical).normalized * frame_mov_speed;
+			//transform.Translate(mov_direction);
 
 			if (Input.GetKey(KeyCode.W))
 			{
-				transform.Translate(transform.forward * frame_mov_speed);
+				transform.Translate(Vector3.forward * frame_mov_speed);
 			}
 			if (Input.GetKey(KeyCode.A))
 			{
-				transform.Translate(transform.right * -frame_mov_speed);
+				transform.Translate(Vector3.right * -frame_mov_speed);
 			}
 			if (Input.GetKey(KeyCode.S))
 			{
-				transform.Translate(transform.forward * -frame_mov_speed);
+				transform.Translate(Vector3.forward * -frame_mov_speed);
 			}
 			if (Input.GetKey(KeyCode.D))
 			{
-				transform.Translate(transform.right * frame_mov_speed);
+				transform.Translate(Vector3.right * frame_mov_speed);
 			}
 			if (Input.GetKey(KeyCode.Space))
 			{
-				transform.Translate(transform.up * frame_mov_speed);
+				transform.Translate(Vector3.up * frame_mov_speed);
 			}
 			if (Input.GetKey(KeyCode.LeftControl))
 			{
-				transform.Translate(transform.up * -frame_mov_speed);
+				transform.Translate(Vector3.up * -frame_mov_speed);
+			}
+		}
+		else
+		{
+			if (cursor_locked)
+			{
+				Cursor.lockState = CursorLockMode.None;
+				cursor_locked = false;
 			}
 		}
 	}
