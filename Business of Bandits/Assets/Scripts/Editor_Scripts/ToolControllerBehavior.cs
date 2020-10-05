@@ -20,6 +20,8 @@ public class ToolControllerBehavior : MonoBehaviour
 
 	private GameObject selectedObj = null;
 
+	private bool disabled = false;
+
 	private void Start()
 	{
 		if (Transform_Widget != null)
@@ -39,6 +41,9 @@ public class ToolControllerBehavior : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
+		if (disabled)
+			return;
+
 
 		if (selectedObj != null)
 		{
@@ -59,31 +64,32 @@ public class ToolControllerBehavior : MonoBehaviour
 				float tool_move;
 
 				Vector3 cam_forward = Main_Camera.transform.forward;
+				float cam_adjust = Vector3.Distance(Main_Camera.transform.position, selectedObj.transform.position);
 
-				float x_adjust_h = cam_forward.z / Mathf.Abs(cam_forward.z);
-				float x_adjust_v = cam_forward.x / Mathf.Abs(cam_forward.x);
+				float x_adjust_h = (cam_forward.z != 0) ? (cam_forward.z / Mathf.Abs(cam_forward.z)) : 1;
+				float x_adjust_v = (cam_forward.x != 0) ? cam_forward.x / Mathf.Abs(cam_forward.x) : 1;
 
 				switch (axis_lock)
 				{
 					case "translate-all-axes":
-						float horz_mv = mouse_x * translate_speed;
-						float vert_mv = mouse_y * translate_speed;
+						float horz_mv = mouse_x * cam_adjust / 53.75f; ;
+						float vert_mv = mouse_y * cam_adjust / 53.75f; ;
 
 						selectedObj.transform.position += (Main_Camera.transform.right * horz_mv) + (Main_Camera.transform.up * vert_mv);
 						break;
 					case "translate-x-axis":
 						tool_move = (Mathf.Abs(mouse_x) > Mathf.Abs(mouse_y)) ? mouse_x * x_adjust_h: mouse_y * x_adjust_v;
-						tool_move *= translate_speed;
+						tool_move *= cam_adjust/53.75f;
 						selectedObj.transform.position += Vector3.right * tool_move;
 						break;
 					case "translate-y-axis":
 						tool_move = (Mathf.Abs(mouse_x) > Mathf.Abs(mouse_y)) ? mouse_x : mouse_y;
-						tool_move *= translate_speed;
+						tool_move *= cam_adjust / 53.75f;
 						selectedObj.transform.position += Vector3.up * tool_move;
 						break;
 					case "translate-z-axis":
 						tool_move = (Mathf.Abs(mouse_x) > Mathf.Abs(mouse_y)) ? mouse_x * -x_adjust_v : mouse_y * x_adjust_h;
-						tool_move *= translate_speed;
+						tool_move *= cam_adjust / 53.75f;
 						selectedObj.transform.position += Vector3.forward * tool_move;
 						break;
 					case "rotate-x-axis":
@@ -168,21 +174,31 @@ public class ToolControllerBehavior : MonoBehaviour
 
 				axis_lock = "";
 			}
+
+			if (Input.GetKey(KeyCode.Delete))
+			{
+				GameObject tmp = selectedObj;
+				DeselectObject();
+				Destroy(tmp);
+			}
 		}
 
-
-		RaycastHit hit;
-		Ray main_ray = Main_Camera.ScreenPointToRay(Input.mousePosition);
-		if (Physics.Raycast(main_ray, out hit))
+		if (axis_lock == "")
 		{
-			Transform objectHit_transform = hit.transform;
-			GameObject objectHit = objectHit_transform.gameObject;
-
-			if (Input.GetMouseButton(0))
+			RaycastHit hit;
+			Ray main_ray = Main_Camera.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(main_ray, out hit))
 			{
-				if (objectHit.CompareTag("editor_obj"))
+				Transform objectHit_transform = hit.transform;
+				GameObject objectHit = objectHit_transform.gameObject;
+
+				if (Input.GetMouseButton(0))
 				{
-					SelectObject(objectHit);
+					if (objectHit.CompareTag("editor_obj"))
+					{
+						DeselectObject();
+						SelectObject(objectHit);
+					}
 				}
 			}
 		}
@@ -220,25 +236,39 @@ public class ToolControllerBehavior : MonoBehaviour
 		ToggleWidgetRender(true);
 		Transform_Widget.transform.position = obj.transform.position;
 		selectedObj = obj;
-		selectedObj.GetComponent<Rigidbody>().useGravity = false;
-		selectedObj.GetComponent<Rigidbody>().detectCollisions = false;
+		Rigidbody r;
+
+		if (r = selectedObj.GetComponent<Rigidbody>())
+		{
+			r.useGravity = false;
+			r.detectCollisions = false;
+		}
 	}
 
 	void DeselectObject() {
-		ToggleWidgetRender(false);
-		if (axis_lock != "")
+		if (selectedObj != null)
 		{
-			if (axis_lock.Contains("rotate-"))
+			ToggleWidgetRender(false);
+			if (axis_lock != "")
 			{
-				ToggleAxisPlane(axis_lock, false);
+				if (axis_lock.Contains("rotate-"))
+				{
+					ToggleAxisPlane(axis_lock, false);
+				}
+
+				axis_lock = "";
 			}
 
-			axis_lock = "";
-		}
+			Rigidbody r;
+			if (r = selectedObj.GetComponent<Rigidbody>())
+			{
+				r.useGravity = true;
+				r.detectCollisions = true;
+			}
 
-		selectedObj.GetComponent<Rigidbody>().useGravity = true;
-		selectedObj.GetComponent<Rigidbody>().detectCollisions = true;
-		selectedObj = null;
+
+			selectedObj = null;
+		}
 	}
 
 	void CenterToolWidget()
@@ -257,5 +287,10 @@ public class ToolControllerBehavior : MonoBehaviour
 	{
 		Transform_Widget.transform.Find("Grimbals").Find(axis).Find("axis-plane-front").gameObject.GetComponent<MeshCollider>().enabled = enabled;
 		Transform_Widget.transform.Find("Grimbals").Find(axis).Find("axis-plane-back").gameObject.GetComponent<MeshCollider>().enabled = enabled;
+	}
+
+	public void ToggleDisabled(bool d)
+	{
+		disabled = d;
 	}
 }
