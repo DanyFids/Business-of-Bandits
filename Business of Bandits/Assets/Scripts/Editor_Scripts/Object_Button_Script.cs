@@ -9,6 +9,8 @@ public class Object_Button_Script : MonoBehaviour
 	private static int EDITOR_OBJECT_LAYER = 10;
 	private static int PLACE_OBJECT_LAYER = 11;
 
+	public const float MIN_PLACE_RANGE = 1.0f;
+
 	public GameObject Template_Object = null;
 	public Camera Main_Camera;
 	public ToolControllerBehavior Tool_Controller;
@@ -43,6 +45,8 @@ public class Object_Button_Script : MonoBehaviour
 			LayerMask layerMask = ~(LayerMask.GetMask("Place Objects", "UI"));
 
 			place_distance += Input.mouseScrollDelta.y;
+			if (place_distance < 1.0f)
+				place_distance = 1.0f;
 
 			if (Physics.Raycast(ray, out hit, place_distance, layerMask))
 			{
@@ -74,7 +78,11 @@ public class Object_Button_Script : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
+		foreach(Rigidbody r in GameObject.Find("Templates").GetComponentsInChildren<Rigidbody>())
+		{
+			r.detectCollisions = false;
+			r.useGravity = false;
+		}
     }
 
     // Update is called once per frame
