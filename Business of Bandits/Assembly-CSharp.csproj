@@ -55,6 +55,7 @@
     <Compile Include="Assets\Scripts\Editor_Scripts\CameraBehavior.cs" />
     <Compile Include="Assets\Scripts\Editor_Scripts\ToolControllerBehavior.cs" />
     <Compile Include="Assets\Scripts\Editor_Scripts\Object_Button_Script.cs" />
+    <Compile Include="Assets\Scripts\Editor_Scripts\prefab_info.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
