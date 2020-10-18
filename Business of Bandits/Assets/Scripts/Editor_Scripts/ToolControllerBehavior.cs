@@ -175,7 +175,7 @@ public class ToolControllerBehavior : MonoBehaviour
 				axis_lock = "";
 			}
 
-			if (Input.GetKey(KeyCode.Delete))
+			if (Input.GetKey(KeyCode.Delete)) //Delete
 			{
 				GameObject tmp = selectedObj;
 				DeselectObject();
