@@ -6,6 +6,7 @@ TagManager:
   tags:
   - editor_obj
   - place_obj
+  - stack_obj
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Editor Objects
   - Place Objects
   - Templates
-  - 
+  - Stack Objects
   - 
   - 
   - 

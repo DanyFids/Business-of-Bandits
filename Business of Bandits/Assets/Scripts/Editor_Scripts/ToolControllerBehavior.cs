@@ -185,7 +185,9 @@ public class ToolControllerBehavior : MonoBehaviour
 				Action_Handler.Log(tmp, "Destroy");
 
 				DeselectObject();
-				Destroy(tmp);
+
+				Action_Handler.HoldObject(tmp);
+				//Destroy(tmp);
 			}
 		}
 
@@ -213,7 +215,7 @@ public class ToolControllerBehavior : MonoBehaviour
         {
 			
 			Callback_Interface token = new Undo_Call(Action_Handler,"Undo");
-			Debug.Log(token);
+			//Debug.Log(token);
 			Token_Handler.ReceiveToken(token);
         }
 
@@ -221,7 +223,7 @@ public class ToolControllerBehavior : MonoBehaviour
 		{
 
 			Callback_Interface token = new Redo_Call(Action_Handler, "Redo");
-			Debug.Log(token);
+			//Debug.Log(token);
 			Token_Handler.ReceiveToken(token);
 		}
 
