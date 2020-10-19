@@ -55,13 +55,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Design_Patterns\Callback_Interface.cs" />
      <Compile Include="Assets\Scripts\Editor_Scripts\CameraBehavior.cs" />
+     <Compile Include="Assets\Scripts\Design_Patterns\Undo_Call.cs" />
      <Compile Include="Assets\Scripts\Editor_Scripts\ToolControllerBehavior.cs" />
      <Compile Include="Assets\Scripts\Editor_Scripts\Object_Button_Script.cs" />
-     <Compile Include="Assets\Scripts\Design_Patterns\Callback_Interface.cs" />
-     <Compile Include="Assets\Scripts\Design_Patterns\Undo_Call.cs" />
      <Compile Include="Assets\Scripts\Editor_Scripts\ActionLogHandler.cs" />
-     <Compile Include="Assets\Scripts\Design_Patterns\TokenReqestHandler.cs" />
+     <Compile Include="Assets\Scripts\Design_Patterns\TokenRequestHandler.cs" />
+     <Compile Include="Assets\Scripts\Design_Patterns\Redo_Call.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/HsUser/Desktop/YEAR 3/Game Engine Design &amp; Implementation/Assignments/Assignment 1/Business-of-Bandits/Business of Bandits/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

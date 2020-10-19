@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface Callback_Interface 
-{
-
-    void Execute();
+{   //Parent Interface
+     void Execute();
 }

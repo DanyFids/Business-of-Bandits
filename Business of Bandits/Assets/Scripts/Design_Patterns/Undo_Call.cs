@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Undo_Call : MonoBehaviour, Callback_Interface
+public class Undo_Call : Callback_Interface
 {
-    private ActionLogHandler TargetObj;
-    private string TargetMethod;
+    private ActionLogHandler Handler;
+    public string TargetMethod;
 
     public Undo_Call(ActionLogHandler recieverObj, string methodPtr)
     {
-        TargetObj = recieverObj;
+        Handler = recieverObj;
         TargetMethod = methodPtr;
     }
 
@@ -17,7 +17,7 @@ public class Undo_Call : MonoBehaviour, Callback_Interface
     {
         if(TargetMethod == "Undo")
         {
-            TargetObj.Undo();
+            Handler.Undo();
         }
     }
 }

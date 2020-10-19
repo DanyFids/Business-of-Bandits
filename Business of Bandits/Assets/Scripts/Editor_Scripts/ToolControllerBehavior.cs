@@ -10,6 +10,9 @@ public class ToolControllerBehavior : MonoBehaviour
 	public Camera ToolSubCam;
 	public float translate_speed = 1/10.0f;
 
+	public TokenRequestHandler Token_Handler; // Handles reading of Token Calls
+	public ActionLogHandler Action_Handler; //Handles Logging of Actions
+
 	//Widget Axes
 	private GameObject Translate_X_Axis;
 	private GameObject Translate_Y_Axis;
@@ -178,6 +181,9 @@ public class ToolControllerBehavior : MonoBehaviour
 			if (Input.GetKey(KeyCode.Delete)) //Delete
 			{
 				GameObject tmp = selectedObj;
+
+				Action_Handler.Log(tmp, "Destroy");
+
 				DeselectObject();
 				Destroy(tmp);
 			}
@@ -202,6 +208,23 @@ public class ToolControllerBehavior : MonoBehaviour
 				}
 			}
 		}
+
+        if (Input.GetKeyDown(KeyCode.Comma)) // < (UNDO)
+        {
+			
+			Callback_Interface token = new Undo_Call(Action_Handler,"Undo");
+			Debug.Log(token);
+			Token_Handler.ReceiveToken(token);
+        }
+
+		if (Input.GetKeyDown(KeyCode.Period)) // > (REDO)
+		{
+
+			Callback_Interface token = new Redo_Call(Action_Handler, "Redo");
+			Debug.Log(token);
+			Token_Handler.ReceiveToken(token);
+		}
+
 	}
 
 	void ToggleWidgetRender(bool enabled)
