@@ -14,6 +14,7 @@ public class Object_Button_Script : MonoBehaviour
 	public GameObject Template_Object = null;
 	public Camera Main_Camera;
 	public ToolControllerBehavior Tool_Controller;
+	public ActionLogHandler Action_Handler;
 
 	private GameObject new_obj = null;
 	private float place_distance = 10.0f;
@@ -26,7 +27,12 @@ public class Object_Button_Script : MonoBehaviour
 		if (new_obj == null && Template_Object != null)
 		{
 			new_obj = Instantiate(Template_Object);
+
 			new_obj.transform.parent = Map.transform;
+
+			// Log That something has been created.
+			Action_Handler.Log(new_obj, "Create");
+
 			new_obj.tag = "place_obj";
 			new_obj.layer = PLACE_OBJECT_LAYER;
 			if (Map != null)
@@ -41,9 +47,15 @@ public class Object_Button_Script : MonoBehaviour
 				r.detectCollisions = false;
 			}
 
+			
+
 			if (Tool_Controller != null)
 				Tool_Controller.ToggleDisabled(true);
+
+			
 		}
+
+		
 	}
 
 	private void OnMouseDrag()
@@ -78,6 +90,8 @@ public class Object_Button_Script : MonoBehaviour
 			r.useGravity = true;
 			r.detectCollisions = true;
 		}
+
+
 		new_obj = null;
 
 		if(Tool_Controller != null)

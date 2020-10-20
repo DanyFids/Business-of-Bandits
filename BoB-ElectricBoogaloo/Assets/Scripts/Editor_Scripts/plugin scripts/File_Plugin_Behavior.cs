@@ -19,6 +19,8 @@ public class File_Plugin_Behavior : MonoBehaviour
 	public GameObject save_menu;
 	public GameObject new_menu;
 
+	public ActionLogHandler Action_Handler;
+
 	[StructLayout(LayoutKind.Sequential)]
 	struct Vector3
 	{
@@ -64,6 +66,9 @@ public class File_Plugin_Behavior : MonoBehaviour
 	private static extern void Create_Object(string id, string prefab, Transform transform);
 
 	[DllImport(PLUGIN_DLL)]
+	private static extern void Remove_Object(string id);
+
+	[DllImport(PLUGIN_DLL)]
 	private static extern string Get_Map_Name();
 
 	[DllImport(PLUGIN_DLL)]
@@ -90,6 +95,11 @@ public class File_Plugin_Behavior : MonoBehaviour
 
 		Create_Object(id, pref, temp);
 	}
+
+	public void RemoveObject(GameObject obj)
+    {
+		Remove_Object(obj.name);
+    }
 
 	public void NewMap(string name)
 	{
@@ -180,6 +190,8 @@ public class File_Plugin_Behavior : MonoBehaviour
 		{
 			GameObject.Destroy(Map.transform.GetChild(c).gameObject);
 		}
+
+		Action_Handler.Clean_Slate();
 	}
 
 	public void LoadSelectedMap()
