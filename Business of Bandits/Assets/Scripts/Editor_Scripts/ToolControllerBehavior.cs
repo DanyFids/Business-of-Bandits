@@ -11,7 +11,7 @@ public class ToolControllerBehavior : MonoBehaviour
 	public float translate_speed = 1/10.0f;
 
 	public TokenRequestHandler Token_Handler; // Handles reading of Token Calls
-	public ActionLogHandler Action_Handler; //Handles Logging of Actions
+	public ActionLogHandler Action_Handler; //Handles Logging and Execution of Actions
 
 	//Widget Axes
 	private GameObject Translate_X_Axis;
@@ -182,11 +182,13 @@ public class ToolControllerBehavior : MonoBehaviour
 			{
 				GameObject tmp = selectedObj;
 
-				Action_Handler.Log(tmp, "Destroy");
+				//Action_Handler.Log(tmp, "Destroy");
 
 				DeselectObject();
 
-				Action_Handler.HoldObject(tmp);
+				Callback_Interface token = new Delete_Call(Action_Handler,"Delete",tmp); //Delete
+				Token_Handler.ReceiveToken(token);
+
 				//Destroy(tmp);
 			}
 		}

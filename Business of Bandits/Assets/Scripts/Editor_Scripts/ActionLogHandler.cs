@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ActionLogHandler : MonoBehaviour
 {
-    public enum Actions {_Create,_Destroy}
+    
+
+    public enum Actions {_Create, _Destroy, _NULL} 
 
     public static Stack<GameObject> ObjectsUNDO = new Stack<GameObject>(); //The past
     public static Stack<Actions> ActionsUNDO = new Stack<Actions>();
 
-    public static Stack<GameObject> CurrentObject = new Stack<GameObject>(); //The most recent Thing
-    public static Stack<Actions> CurrentAction = new Stack<Actions>();
+    //public static Stack<GameObject> CurrentObject = new Stack<GameObject>(); //The most recent Thing
+    //public static Stack<Actions> CurrentAction = new Stack<Actions>();
 
     public static Stack<GameObject> ObjectsREDO = new Stack<GameObject>(); //The 'Future' (if undone)
     public static Stack<Actions> ActionsREDO = new Stack<Actions>();
@@ -39,6 +41,8 @@ public class ActionLogHandler : MonoBehaviour
             r.useGravity = false;
             r.detectCollisions = false;
         }
+
+        
     }
 
     public void FreeObject(GameObject obj)
@@ -59,39 +63,54 @@ public class ActionLogHandler : MonoBehaviour
             r.useGravity = true;
             r.detectCollisions = true;
         }
+
+        
     }
 
     private void MaintainStack()
     {
+        
         //Stack size cannot be greater than 15
-        if(ObjectsUNDO.Count > MAX_ACTIONS_HELD)
+        if(ObjectsUNDO.Count > MAX_ACTIONS_HELD && ObjectsUNDO.Count > 0)
         {
             print("Maintaining stacks..");
 
             Stack<GameObject> tempObjs = new Stack<GameObject>();
             Stack<Actions> tempActs = new Stack<Actions>();
 
-            for(int i = 0; i < ObjectsUNDO.Count; i++)
+            int num = ObjectsUNDO.Count;
+
+           // print(ObjectsUNDO.Count);
+
+            for (int i = 1; i <= num; i++) //6
             {
-                if (i < MAX_ACTIONS_HELD) // Destroy anything past the 15 most recent things
+
+                if (i <= MAX_ACTIONS_HELD) // Destroy anything past the 5 most recent things
                 {
                     tempObjs.Push(ObjectsUNDO.Pop());
+
+
                     tempActs.Push(ActionsUNDO.Pop());
+
+
+                    //print(i);
                 }
                 else
                 {
                     GameObject tmp = ObjectsUNDO.Pop();
-                    ActionsUNDO.Pop();
+                    Actions tmpAct = ActionsUNDO.Pop();
 
-                    if(tmp.tag == "stack_obj")
+                    if(tmp.tag == "stack_obj" && tmp != null)
                     {
                         Destroy(tmp);
                     }
                 }
             }
 
-            for(int i = 0; i < tempObjs.Count; i++) // Re-ordering the stack.
+            print(tempObjs.Count);
+            for (int i = 1; i <= MAX_ACTIONS_HELD; i++) // Re-ordering the stack.
             {
+                
                 ObjectsUNDO.Push(tempObjs.Pop());
                 ActionsUNDO.Push(tempActs.Pop());
             }
@@ -108,7 +127,7 @@ public class ActionLogHandler : MonoBehaviour
             {
                 GameObject temp = stack.Pop();
 
-                if (temp.tag == "stack_obj")
+                if (temp.tag == "stack_obj" && temp != null)
                 {
                     Destroy(temp);
                 }
@@ -121,83 +140,44 @@ public class ActionLogHandler : MonoBehaviour
         ActionsREDO.Clear();        // Upon logging a new action, removes any stored redo's
         ClearStack(ObjectsREDO);
 
-        if (CurrentObject.Count == 0)
+      
+        ObjectsUNDO.Push(obj); // Push Object onto stack (Pointer to original object)
+        
+        //Convert string to Enum then push appropriate Action onto the stack
+        if (action == "Create")
         {
-            CurrentObject.Push(obj);
-
-            if (action == "Create")
-            {
-                CurrentAction.Push(Actions._Create);
-            }
-
-            if (action == "Destroy")
-            {
-                CurrentAction.Push(Actions._Destroy);
-            }
+             ActionsUNDO.Push(Actions._Create);
         }
-        else
+        
+        if (action == "Destroy")
         {
-            ObjectsUNDO.Push(CurrentObject.Pop()); // Push Object onto stack (Pointer to original object)
-            ActionsUNDO.Push(CurrentAction.Pop()); // 
-
-            //Convert string to Enum then push appropriate Action onto the stack
-            CurrentObject.Push(obj);
-
-            if (action == "Create")
-            {
-                CurrentAction.Push(Actions._Create);
-            }
-
-            if (action == "Destroy")
-            {
-                CurrentAction.Push(Actions._Destroy);
-            }
+            print("Destroyed.");
+            ActionsUNDO.Push(Actions._Destroy);
         }
-
-        MaintainStack(); //Keeps the number of 
+        
+        MaintainStack(); //Keeps the number of Undo's in check.
 
     }
 
+    /// CALLS ////
 
     public void Undo()
     {
-       
+
+        // UNDO >>> Current >>> REDO
 
         //Debug.Log("Reached Handler");
-        if (CurrentObject.Count > 0 && ObjectsUNDO.Count == 0)
+        if ( ObjectsUNDO.Count > 0)
         {
-            GameObject tempObj = CurrentObject.Pop();
-            Actions tempAct = CurrentAction.Pop();
 
-            ObjectsUNDO.Push(tempObj);
-            ActionsUNDO.Push(tempAct);
-
-            switch (tempAct)
-            {
-                case Actions._Create:
-                    //print("I should destroy here");
-                    HoldObject(tempObj);
-
-                    break;
-                case Actions._Destroy:
-                    //print("I Should create here");
-                    FreeObject(tempObj);
-
-                    break;
-                default:
-                    print("something went wrong");
-                    break;
-
-            }
-        }
-        else if (ObjectsUNDO.Count > 0  && ActionsUNDO.Count > 0) 
-        {
-            GameObject tempObj = ObjectsUNDO.Pop();     
+            GameObject tempObj = ObjectsUNDO.Pop();
             Actions tempAct = ActionsUNDO.Pop();
 
             ObjectsREDO.Push(tempObj);
             ActionsREDO.Push(tempAct);
 
+            //Debug.Log(ObjectsREDO.Peek());
+
             switch (tempAct)
             {
                 case Actions._Create:
@@ -208,77 +188,90 @@ public class ActionLogHandler : MonoBehaviour
                 case Actions._Destroy:
                     //print("I Should create here");
                     FreeObject(tempObj);
-                    
+
                     break;
                 default:
                     print("something went wrong");
-                   break;
+                    break;
 
             }
-        }
 
+
+
+            /**if (ObjectsUNDO.Count > 0 && ActionsUNDO.Count > 0)
+            {
+
+                CurrentObject.Push(ObjectsUNDO.Pop());
+                CurrentAction.Push(ActionsUNDO.Pop());
+
+                //switch (tempAct)
+                //{
+                //    case Actions._Create:
+                //        //print("I should destroy here");
+                //        HoldObject(tempObj);
+                //
+                //        break;
+                //    case Actions._Destroy:
+                //        //print("I Should create here");
+                //        FreeObject(tempObj);
+                //        
+                //        break;
+                //    default:
+                //        print("something went wrong");
+                //       break;
+                //
+                //}
+            } **/
+        }
         
     }
 
     public void Redo()
     {
-        //print("Reached Handler (Redo)");
 
-        if (CurrentObject.Count == 0 && ObjectsUNDO.Count > 0)
+        // UNDO <<< CURRENT <<< REDO
+        print(ObjectsREDO.Count);
+
+        if (ObjectsREDO.Count > 0)
         {
-            GameObject tempObj = ObjectsUNDO.Pop();
-            Actions tempAct = ActionsUNDO.Pop();
+           
+           
+                GameObject tempObj = ObjectsREDO.Pop();
+                Actions tempAct = ActionsREDO.Pop();
 
-            CurrentObject.Push(tempObj);
-            CurrentAction.Push(tempAct);
+                ObjectsUNDO.Push(tempObj);
+                ActionsUNDO.Push(tempAct);
 
-            switch (tempAct)
-            {
-                case Actions._Create:
-                    //print("I should destroy here");
-                    HoldObject(tempObj);
+                //Debug.Log(tempObj);
 
-                    break;
-                case Actions._Destroy:
-                    //print("I Should create here");
-                    FreeObject(tempObj);
+                switch (tempAct)
+                {
+                    case Actions._Create:
+                        //print("I should destroy here");
+                        FreeObject(tempObj);
 
-                    break;
-                default:
-                    print("something went wrong");
-                    break;
+                        break;
+                    case Actions._Destroy:
+                        //print("I Should create here");
+                        HoldObject(tempObj);
 
-            }
-        }
-        else if (ObjectsREDO.Count > 0 && ActionsREDO.Count > 0)
-        {
+                        break;
+                    default:
+                        print("something went wrong");
+                        break;
 
-            GameObject tempObj = ObjectsREDO.Pop();
-            Actions tempAct = ActionsREDO.Pop();
+                }
+            
 
-            ObjectsUNDO.Push(tempObj);
-            ActionsUNDO.Push(tempAct);
-
-            switch (tempAct)
-            {
-                case Actions._Create:
-                    //print("I should destroy here");
-                    FreeObject(tempObj);
-
-                    break;
-                case Actions._Destroy:
-                    //print("I Should create here");
-                    HoldObject(tempObj);
-
-                    break;
-                default:
-                    print("something went wrong");
-                    break;
-
-            }
         }
 
         
+    }
+
+    public void Delete(GameObject obj)
+    {
+        Log(obj, "Destroy");
+        HoldObject(obj);
     }
 
 
