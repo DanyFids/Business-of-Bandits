@@ -19,6 +19,9 @@ public class Object_Button_Script : MonoBehaviour
 	private GameObject new_obj = null;
 	private float place_distance = 10.0f;
 
+	private GameObject Map = null;
+	private File_Plugin_Behavior File_Handler = null;
+
 	private void OnMouseDown()
 	{
 		if (new_obj == null && Template_Object != null)
@@ -28,6 +31,11 @@ public class Object_Button_Script : MonoBehaviour
 
 			new_obj.tag = "place_obj";
 			new_obj.layer = PLACE_OBJECT_LAYER;
+			if (Map != null)
+				new_obj.name = Name_Generator.Run_Unique(Map);
+			if (File_Handler != null)
+				File_Handler.AddObject(new_obj);
+
 			Rigidbody r;
 			if (r = new_obj.GetComponent<Rigidbody>())
 			{
@@ -91,12 +99,15 @@ public class Object_Button_Script : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		foreach(Rigidbody r in GameObject.Find("Templates").GetComponentsInChildren<Rigidbody>())
+		/*foreach(Rigidbody r in GameObject.Find("Templates").GetComponentsInChildren<Rigidbody>())
 		{
 			r.detectCollisions = false;
 			r.useGravity = false;
-		}
-    }
+		}*/
+
+		Map = GameObject.Find("Map");
+		File_Handler = GameObject.Find("File_Handler").GetComponent<File_Plugin_Behavior>();
+	}
 
     // Update is called once per frame
     void Update()
